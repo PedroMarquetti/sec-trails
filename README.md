@@ -10,7 +10,7 @@ This script fetches data from [Security Trails](https://securitytrails.com/)'s [
 
 ## What this program currently do?
 
-For now, it only prints the current_dns 'A' record ip and ip_organization field that the API sent:
+For now, it only prints the current_dns 'A record' ip and ip_organization field (at index 0) that the API sent:
 
 ```
 "current_dns": {

@@ -31,9 +31,14 @@ async fn main() -> Result<(), ExitFailure> {
     // TODO: add different types here...
     // let types = args.types; // [ ] containing request type -
     let res = details::QueryInfo::get(&url, &key).await?;
-    println!(
-        "Info about: {}\nIP: {}\nIP Org.: {}",
-        url, res.current_dns.a.values[0].ip, res.current_dns.a.values[0].ip_organization
-    );
+    println!("Info about: {}", url);
+    println!("'A Record values':\n");
+    for items in res.current_dns.a.values {
+        // TODO: make this async?
+        println!(
+            "\tIP address: {}\n\tIP Org.: {}\n",
+            items.ip, items.ip_organization
+        );
+    }
     Ok(())
 }

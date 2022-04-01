@@ -18,7 +18,7 @@ For now, it only prints the current_dns 'A' record ip and ip_organization field 
         "values": [
         {
             "ip": "<IP Addres of requested URL",
-            "ip_organization": "Oracle Corporation"
+            "ip_organization": "ip_organization name"
         }
     ]
 }

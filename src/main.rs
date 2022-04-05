@@ -1,9 +1,7 @@
 mod details;
 use clap::Parser;
-// use details::QueryInfo;
+use colored::*;
 use exitfailure::ExitFailure;
-// use reqwest::Url;
-// use serde_derive::{Deserialize, Serialize};
 
 #[derive(Parser)]
 #[clap(author = "Made by: Phlm")]
@@ -31,13 +29,16 @@ async fn main() -> Result<(), ExitFailure> {
     // TODO: add different types here...
     // let types = args.types; // [ ] containing request type -
     let res = details::QueryInfo::get(&url, &key).await?;
-    println!("Info about: {}", url);
-    println!("'A Record values':\n");
+    println!("{}{}", "Info about: ".cyan(), url.white());
+    println!("\n{}", "'A Record values':\n".cyan());
     for items in res.current_dns.a.values {
         // TODO: make this async?
         println!(
-            "\tIP address: {}\n\tIP Org.: {}\n",
-            items.ip, items.ip_organization
+            "{} {}\n{}{}\n",
+            "IP address:".cyan(),
+            items.ip.white(),
+            "IP Org.: ".cyan(),
+            items.ip_organization.white()
         );
     }
     Ok(())

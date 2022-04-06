@@ -3,6 +3,7 @@ use clap::Parser;
 use colored::*;
 use exitfailure::ExitFailure;
 use modes::details;
+use modes::subdomains;
 
 #[derive(Parser)]
 #[clap(author = "Made by: Phlm")]
@@ -33,12 +34,12 @@ async fn main() -> Result<(), ExitFailure> {
     let url = args.url;
     let key = args.key;
     // TODO: add different types here...
-    let types: std::string::String = args.types.unwrap_or("_".to_string()); // gets values from -t flag... if not specified, defaults to '_' (returns String)
-    let types_vec: &Vec<&str> = &types.split(",").collect(); // turning "types" var into a Vec<&str> so it's easier to par
-    let res = details::QueryInfo::get(&url, &key).await?;
+    // let types: std::string::String = args.types.unwrap_or("_".to_string()); // gets values from -t flag... if not specified, defaults to '_' (returns String)
+    // let types_vec: &Vec<&str> = &types.split(",").collect(); // turning "types" var into a Vec<&str> so it's easier to parse values
+    let info = details::QueryInfo::get(&url, &key).await?;
     println!("{}{}", "Info about: ".cyan(), url.white());
     println!("\n{}", "'A Record values':\n".cyan());
-    for items in res.current_dns.a.values {
+    for items in info.current_dns.a.values {
         // TODO: make this async?
         println!(
             "{} {}\n{}{}\n",
@@ -47,6 +48,17 @@ async fn main() -> Result<(), ExitFailure> {
             "IP Org.: ".cyan(),
             items.ip_organization.white()
         );
+    }
+    let sub_domains = subdomains::QuerySubDomain::get(&url, &key).await?;
+    println!("{}", "Subdomains of URL".cyan());
+    let mut i: i16 = 0;
+    for items in sub_domains.subdomains {
+        i += 1;
+        println!("{}.{}", items.red(), url.yellow());
+        if i == 5 {
+            // is there another way to limit this?
+            break;
+        }
     }
     Ok(())
 }

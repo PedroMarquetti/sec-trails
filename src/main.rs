@@ -51,6 +51,16 @@ async fn main() -> Result<(), ExitFailure> {
     }
     let sub_domains = subdomains::QuerySubDomain::get(&url, &key).await?;
     println!("{}", "Subdomains of URL".cyan());
+    println!(
+        "{}{}",
+        "Subdomain count is: ".cyan(),
+        sub_domains.subdomain_count.to_string().red()
+    );
+    println!(
+        "{}{}:\n",
+        "Getting 5 items of ".yellow(),
+        sub_domains.subdomain_count.to_string().red()
+    );
     let mut i: i16 = 0;
     for items in sub_domains.subdomains {
         i += 1;

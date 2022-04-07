@@ -5,6 +5,7 @@ use serde_derive::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug)]
 pub struct QuerySubDomain {
     pub subdomains: Vec<String>,
+    pub subdomain_count: i32,
 }
 
 impl QuerySubDomain {

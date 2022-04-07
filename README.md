@@ -28,6 +28,7 @@ This script fetches data from [Security Trails](https://securitytrails.com/)'s [
 
 ```
 {
+    "subdomain_count":<number>,
     "subdomains":[...]
 }
 ```
